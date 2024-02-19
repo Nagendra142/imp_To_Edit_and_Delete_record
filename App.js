@@ -53,11 +53,39 @@ export const App=()=>{
             textM:one.textM,
             id:one.id
         })
+        
+        
     }
+    //For update the after edit
+    function Edit_karo(e){
+        e.preventDefault();
+        const lists=single.map(ch=>{
+            if(ch.id===message.id){
+                console.log(message.id," ",ch.id);
+                return {
+                    textM:message.textM,
+                    id:ch.id
+                }
+                
+            }
+            else{
+                return ch;
+            }
+        })
+        setsingle(lists);
+        setmessage({
+            textM:"",
+            id:""
+        })
+        setedit(false);
+
+    }
+
     return <>
     <form>
         <input type="text" placeholder="Type text" id="text" value={message.textM} onChange={ChangeText}/>
-        <button onClick={Submitbytton}>{editable?"Edit":"Add"}</button>
+        {/* <button onClick={Submitbytton}>{editable?"Edit":"Add"}</button> */}
+        {editable?<button onClick={Edit_karo}>Edit</button>:<button onClick={Submitbytton}>Add</button>}
     </form>
     {
         (single.length===0 && <h3>No data found</h3>)
@@ -68,6 +96,7 @@ export const App=()=>{
             return (
                 <li key={child.id}>
                 <span>{child.textM}</span>
+                <span>{child.id}</span>
                 <button onClick={()=>Edit_Able(child.id)}>Edit</button>
                 <button onClick={()=>DeleteFun(child.id)}>Delete</button>
                 </li> 
